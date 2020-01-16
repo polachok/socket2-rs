@@ -602,6 +602,41 @@ impl Socket {
         self.inner.set_send_buffer_size(size)
     }
 
+    /// Gets the value of the `SO_RCVLOWAT` option on this socket.
+    ///
+    /// For more information about this option, see
+    /// [`set_recv_low_watermark`][link].
+    ///
+    /// [link]: #method.set_recv_low_watermark
+    pub fn recv_low_watermark(&self) -> io::Result<usize> {
+        self.inner.recv_low_watermark()
+    }
+
+    /// Sets the value of the `SO_RCVLOWAT` option on this socket.
+    ///
+    /// Changes the size of the operating system's receive buffer associated
+    /// with the socket.
+    pub fn set_recv_low_watermark(&self, size: usize) -> io::Result<()> {
+        self.inner.set_recv_low_watermark(size)
+    }
+
+    /// Gets the value of the `SO_SNDLOWAT` option on this socket.
+    ///
+    /// For more information about this option, see [`set_send_buffer`][link].
+    ///
+    /// [link]: #method.set_send_low_watermark
+    pub fn send_low_watermark(&self) -> io::Result<usize> {
+        self.inner.send_low_watermark()
+    }
+
+    /// Sets the value of the `SO_SNDLOWAT` option on this socket.
+    ///
+    /// Changes the size of the operating system's send buffer associated with
+    /// the socket.
+    pub fn set_send_low_watermark(&self, size: usize) -> io::Result<()> {
+        self.inner.set_send_low_watermark(size)
+    }
+
     /// Returns whether keepalive messages are enabled on this socket, and if so
     /// the duration of time between them.
     ///

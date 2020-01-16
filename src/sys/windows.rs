@@ -625,6 +625,34 @@ impl Socket {
         }
     }
 
+    pub fn recv_low_watermark(&self) -> io::Result<usize> {
+        unsafe {
+            let raw: c_int = self.getsockopt(SOL_SOCKET, SO_RCVLOWAT)?;
+            Ok(raw as usize)
+        }
+    }
+
+    pub fn set_recv_low_watermark(&self, size: usize) -> io::Result<()> {
+        unsafe {
+            // TODO: casting usize to a c_int should be a checked cast
+            self.setsockopt(SOL_SOCKET, SO_RCVLOWAT, size as c_int)
+        }
+    }
+
+    pub fn send_low_watermark(&self) -> io::Result<usize> {
+        unsafe {
+            let raw: c_int = self.getsockopt(SOL_SOCKET, SO_SNDLOWAT)?;
+            Ok(raw as usize)
+        }
+    }
+
+    pub fn set_send_low_watermark(&self, size: usize) -> io::Result<()> {
+        unsafe {
+            // TODO: casting usize to a c_int should be a checked cast
+            self.setsockopt(SOL_SOCKET, SO_SNDLOWAT, size as c_int)
+        }
+    }
+
     pub fn keepalive(&self) -> io::Result<Option<Duration>> {
         let mut ka = tcp_keepalive {
             onoff: 0,
